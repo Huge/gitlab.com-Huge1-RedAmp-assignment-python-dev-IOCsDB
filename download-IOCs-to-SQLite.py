@@ -51,9 +51,15 @@ def downloadDatasets():
 	with open("phishyURLs.txt", "w") as target:
 		downloadDatasetToFile(phishyURLs, target)
 
+def storeIPsStringsPoC():
+	import sqlite3
+	with open("badIPs.txt") as datasetTxt:
+		print( datasetTxt.readlines()[:6]) #rstrip('\n') needed in such, so read().splitlines looks better.
+
 def main():
 	#PoC()
 	#downloadDatasets()
+	storeIPsStringsPoC()
 
 if __name__ == "__main__":
 	main()
