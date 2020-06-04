@@ -7,7 +7,7 @@
 #to download files from net:
 import requests 
 #we will push data to SQLite via:
-#import sqlite3
+import sqlite3
 
 #Try it out:
 def PoC():
@@ -18,6 +18,15 @@ def PoC():
 	lines=obtained.text.splitlines() #todo rozvážit šetrnější iterátorz?.?(proč?)
 	t=lines[:200]
 	print(t)
+
+#### Globals for quick tuning: ####
+listingsSources = "https://www.badips.com/get/list/any/2","http://reputation.alienvault.com/reputation.data","https://openphish.com/feed.txt"
+#categoriesOfSources = "IPs", "URLs"
+sourcesAnotatedByCategory = {listingsSources[0]: "IPs", listingsSources[1]: "IPs", listingsSources[2]: "IPs"}
+#todo: just tuple ,xx,yy = assignment
+badIPs = listingsSources[0]#="https://www.badips.com/get/list/any/2"
+badReputationIPsWithInfo = listingsSources[1]
+phishyURLs = listingsSources[2]
 
 def parseDataset(dataset):
 	# dataset is text=string
@@ -31,17 +40,20 @@ def downloadDatasetToFile(sourceURL, fileHandle):
 		fileHandle.write(obtained.text)
 
 # seems integrating httpie 'd be better but hack..:
-def downloadBadIPs():
-	#helper function to avoid downloads, have offline testing capability
-	listingsSources = "https://www.badips.com/get/list/any/2","http://reputation.alienvault.com/reputation.data","https://openphish.com/feed.txt"
-	badIPs = listingsSources[0]#="https://www.badips.com/get/list/any/2"
-	# if exists..manually solved now
+def downloadDatasets():
+	#helper function to avoid downloading on each use, to have offline testing and inspection capability
+	#...[now draining from globals above]
+	# if file exists..manually solved now
 	with open("badIPs.txt", "w") as target:
 		downloadDatasetToFile(badIPs, target)
+	with open("badReputationIPsWithInfo.txt", "w") as target: #So this seems the most complicated, I could well just take the start and ignore all after # sign.
+		downloadDatasetToFile(badReputationIPsWithInfo, target)
+	with open("phishyURLs.txt", "w") as target:
+		downloadDatasetToFile(phishyURLs, target)
 
 def main():
 	#PoC()
-	downloadBadIPs()
+	#downloadDatasets()
 
 if __name__ == "__main__":
 	main()
