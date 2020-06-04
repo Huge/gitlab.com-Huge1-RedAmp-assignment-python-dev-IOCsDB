@@ -54,8 +54,14 @@ def downloadDatasets():
 def storeIPsStringsPoC():
 	import sqlite3
 	with open("badIPs.txt") as datasetTxt:
-		print( datasetTxt.readlines()[:6]) #rstrip('\n') needed in such, so read().splitlines looks better.
-
+		#print( datasetTxt.read().splitlines()[:6]) #todo delete when cleaning or so
+		introIPs = datasetTxt.read().splitlines()[:5]
+	#now store that..:
+	#sqlite3.connect()	
+	import ipaddress #preferred to storing as TEXT or converting to Integers manually
+	print(int(ipaddress.ip_address('1.2.3.4')))
+	print(int(ipaddress.ip_address(introIPs[0]))) #looks good, both
+		
 def main():
 	#PoC()
 	#downloadDatasets()
