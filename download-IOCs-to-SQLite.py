@@ -59,9 +59,17 @@ def storeIPsStringsPoC():
 	#now store that..:
 	#sqlite3.connect()	
 	import ipaddress #preferred to storing as TEXT or converting to Integers manually
-	print(int(ipaddress.ip_address('1.2.3.4')))
-	print(int(ipaddress.ip_address(introIPs[0]))) #looks good, both
-		
+	print(int(ipaddress.ip_address('1.2.3.4'))) 
+	adrObj = ipaddress.ip_address(introIPs[0])
+	internalAdrObj=int(adrObj)
+	print(internalAdrObj) #looks good
+	print(str(adrObj))
+
+def IP2DbField(textIP):
+	return int(ipaddress.ip_address(introIPs))
+def DbIP2text(dbFormatedIP):
+	"""bevare, arg type must be ipaddress-*, not int class. Mostly expected to get arg of type 'ipaddress.IPv4Address'."""
+	return str(dbFormatedIP)
 def main():
 	#PoC()
 	#downloadDatasets()
