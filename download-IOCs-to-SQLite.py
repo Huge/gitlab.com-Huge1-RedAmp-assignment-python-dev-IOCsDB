@@ -4,10 +4,12 @@
 # hacked 4 redamp company, 2020-06-04, see the readme in the repo for specs. 
 #   /please refer xxFile(=readme.md) for xx~devProc=onboarding=hacking/tuning and usage. 
 
-#to download files from net:
+# To download files from net:
 import requests 
-#we will push data to SQLite via:
+# We will push data to SQLite via:
 import sqlite3
+# To store IPs as int(s) we use:
+import ipaddress
 
 #Try it out:
 def PoC():
@@ -28,10 +30,13 @@ badIPs = listingsSources[0]#="https://www.badips.com/get/list/any/2"
 badReputationIPsWithInfo = listingsSources[1]
 phishyURLs = listingsSources[2]
 
-def parseDataset(dataset):
-	# dataset is text=string
-	lines=dataset.splitlines()
-	return lines
+# def parseDataset(dataset):
+# 	# dataset is text=string
+# 	lines=dataset.splitlines()
+# 	return lines
+#def extractIPfromBadReputationLine
+def trimInfoFromBadReputationIPline(line):
+	return line[0:line.find('#')]
 
 # For a quick tweaking/dev feedback we need:
 def downloadDatasetToFile(sourceURL, fileHandle):
@@ -66,14 +71,17 @@ def storeIPsStringsPoC():
 	print(str(adrObj))
 
 def IP2DbField(textIP):
-	return int(ipaddress.ip_address(introIPs))
+	return int(ipaddress.ip_address(textIP))
 def DbIP2text(dbFormatedIP):
 	"""bevare, arg type must be ipaddress-*, not int class. Mostly expected to get arg of type 'ipaddress.IPv4Address'."""
 	return str(dbFormatedIP)
 def main():
 	#PoC()
 	#downloadDatasets()
-	storeIPsStringsPoC()
+	#storeIPsStringsPoC() #looks good, now @todo funcs below test also
+	print(trimInfoFromBadReputationIPline("NoSharpHere"), trimInfoFromBadReputationIPline("1.2.3.4"))#Both wrong!
+	print(trimInfoFromBadReputationIPline(open("badReputationIPsWithInfo.txt").readline()))
+
 
 if __name__ == "__main__":
 	main()
