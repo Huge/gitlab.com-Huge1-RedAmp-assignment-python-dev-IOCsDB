@@ -36,7 +36,10 @@ phishyURLs = listingsSources[2]
 # 	return lines
 #def extractIPfromBadReputationLine
 def trimInfoFromBadReputationIPline(line):
-	return line[0:line.find('#')]
+	#return line[0:line.find('#')]#OK in our case, but struggles/bugs when no # sign found
+	#  #something like [:(not -1 or None)] could be used, but thats piggy, better use split method:
+	(firstField, *_) = line.split('#', maxsplit=1) #This is from my famous https://stackoverflow.com/a/40108965/266446 ;)
+	return firstField
 
 # For a quick tweaking/dev feedback we need:
 def downloadDatasetToFile(sourceURL, fileHandle):
@@ -79,7 +82,7 @@ def main():
 	#PoC()
 	#downloadDatasets()
 	#storeIPsStringsPoC() #looks good, now @todo funcs below test also
-	print(trimInfoFromBadReputationIPline("NoSharpHere"), trimInfoFromBadReputationIPline("1.2.3.4"))#Both wrong!
+	print(trimInfoFromBadReputationIPline("NoSharpHere"), trimInfoFromBadReputationIPline("1.2.3.4"))# Works perfect with .split asigned to result, *_
 	print(trimInfoFromBadReputationIPline(open("badReputationIPsWithInfo.txt").readline()))
 
 
