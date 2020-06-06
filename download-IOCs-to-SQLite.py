@@ -78,13 +78,21 @@ def IP2DbField(textIP):
 def DbIP2text(dbFormatedIP):
 	"""bevare, arg type must be ipaddress-*, not int class. Mostly expected to get arg of type 'ipaddress.IPv4Address'."""
 	return str(dbFormatedIP)
+
 def main():
 	#PoC()
 	#downloadDatasets()
-	#storeIPsStringsPoC() #looks good, now @todo funcs below test also
-	print(trimInfoFromBadReputationIPline("NoSharpHere"), trimInfoFromBadReputationIPline("1.2.3.4"))# Works perfect with .split asigned to result, *_
-	print(trimInfoFromBadReputationIPline(open("badReputationIPsWithInfo.txt").readline()))
+	#storeIPsStringsPoC() #looks good, now @todo funcs IP2DbField and DbIP2text test also
+	#print(trimInfoFromBadReputationIPline("NoSharpHere"), trimInfoFromBadReputationIPline("1.2.3.4"))# Works perfect with .split asigned to result, *_
+	#print(trimInfoFromBadReputationIPline(open("badReputationIPsWithInfo.txt").readline()))
 
+	# # let's fake adding from each to see that works..:
+	# print( *open("badIPs.txt").read().splitlines()[:6] ,sep='\n' ) #keepends=False is default on that one
+	# print(trimInfoFromBadReputationIPline(open("badReputationIPsWithInfo.txt").readline()))
+	# print( *open("phishyURLs.txt").read().splitlines()[:4] ,sep='\n' ) #keepends=False is default on that one 
+
+	from dbImportPoC import tryOutCreatingDb
+	tryOutCreatingDb()
 
 if __name__ == "__main__":
 	main()
