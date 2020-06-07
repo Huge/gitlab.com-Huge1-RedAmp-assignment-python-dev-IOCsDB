@@ -9,35 +9,61 @@ def createDbWithTable(pathToNewDb, tableName, schemaDefinition):
     """ For the schemaDefinition see sqlite3.cursor.execute parameter's docs """  
     try:
         sqliteConnection = sqlite3.connect(pathToNewDb)
-        sqlite_create_table_query = "CREATE TABLE "+tableName+" ("+schemaDefinition+");"
-
+        queryToCreateTheTable = "CREATE TABLE "+tableName+" ("+schemaDefinition+");"
         cursor = sqliteConnection.cursor()
-        print("Successfully Connected to SQLite")
-        cursor.execute(sqlite_create_table_query)
+        # print("Connected to SQLite")#including the func name 'd make it more worthy
+        cursor.execute(queryToCreateTheTable)
         sqliteConnection.commit()
-        print("SQLite table created")
+        # print("SQLite table created")
         cursor.close()
 
     except sqlite3.Error as error:
-        print("Error while creating a sqlite table", error)
+        import sys
+        print("Error while creating a sqlite table,", error, file=sys.stderr)
     finally:
         if (sqliteConnection):
             sqliteConnection.close()
-            print("sqlite connection is closed")
+            # print("sqlite connection is closed")
 
-# def tryCreateDb():
-#     createDbWithTable(..)
-
+dbName = "SQL_PoC.db"
 def tryOutCreatingDb():
-    dbName = "SQL_new_PoC.db"
-    createDbWithTable(dbName, "ehm_table", '''
+    createDbWithTable(dbName, "IPsTable", '''
                                     id INTEGER PRIMARY KEY,
-                                    name TEXT NOT NULL,
-                                    email text NOT NULL UNIQUE,
-                                    joining_date datetime,
-                                    salary REAL NOT NULL''')
+                                    IP TEXT NOT NULL UNIQUE,
+                                    source TEXT NOT NULL,
+                                    obtainedFromSourceDate datetime''')#, @Todo: This and the source  IN FOREIGN KEY NOT NULL''')
+
+def insertToDbTable(pathToDb, tableName, recordList):
+    """ For the schemaDefinition see sqlite3.cursor.execute parameter's docs """  
+    #<sample/insert>
+    try:
+        sqliteConnection = sqlite3.connect(pathToDb)
+        cursor = sqliteConnection.cursor()
+        # print("Connected to SQLite")
+        queryTemplateToInsert = "INSERT INTO "+tableName+"""
+                          (id, IP, source, obtainedFromSourceDate) 
+                          VALUES (?, ?, ?, ?);"""
+
+        cursor.executemany(queryTemplateToInsert, recordList)
+        sqliteConnection.commit()
+        # print("Total", cursor.rowcount, "records inserted into", tableName, "table.")
+        cursor.close()
+
+    except sqlite3.Error as error:
+        import sys
+        print("Failed inserting given records into the sqlite table,", error, file=sys.stderr)
+    finally:
+        if (sqliteConnection):
+            sqliteConnection.close()
+
+def tryOutInsertingToDb():
+    import datetime
+    now = datetime.datetime.now()
+    # todayISO=now.strftime("%Y-%m-%d")
+    # print( todayISO)
+    insertToDbTable( dbName, "IPsTable", [(0, "1.1.1.1", "vymyšlený", now)] )
 
 if __name__ == "__main__":
     tryOutCreatingDb()
-    #view the db to check all ok..
-                                    
+    tryOutInsertingToDb()
+    #view the db to check all ok.. 

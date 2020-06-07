@@ -86,13 +86,13 @@ def main():
 	#print(trimInfoFromBadReputationIPline("NoSharpHere"), trimInfoFromBadReputationIPline("1.2.3.4"))# Works perfect with .split asigned to result, *_
 	#print(trimInfoFromBadReputationIPline(open("badReputationIPsWithInfo.txt").readline()))
 
-	# # let's fake adding from each to see that works..:
-	# print( *open("badIPs.txt").read().splitlines()[:6] ,sep='\n' ) #keepends=False is default on that one
-	# print(trimInfoFromBadReputationIPline(open("badReputationIPsWithInfo.txt").readline()))
-	# print( *open("phishyURLs.txt").read().splitlines()[:4] ,sep='\n' ) #keepends=False is default on that one 
+	## let's fake adding from each to see that works..:
+	#print( *open("badIPs.txt").read().splitlines()[:6] ,sep='\n' ) #keepends=False is default on that one
+	#print(trimInfoFromBadReputationIPline(open("badReputationIPsWithInfo.txt").readline()))
+	#print( *open("phishyURLs.txt").read().splitlines()[:4] ,sep='\n' ) #keepends=False is default on that one 
 
-	from dbImportPoC import tryOutCreatingDb
-	tryOutCreatingDb()
+	from dbImportPoC import tryOutCreatingDb;  tryOutCreatingDb() # Errs if db exists, which is not a problem now.
+	from dbImportPoC import tryOutInsertingToDb;  tryOutInsertingToDb()
 
 if __name__ == "__main__":
 	main()
