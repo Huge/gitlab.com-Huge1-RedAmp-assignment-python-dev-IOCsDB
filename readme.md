@@ -1,7 +1,10 @@
-#RedAmp Assignment to evaluate Python developer skills upon
+# RedAmp Assignment to evaluate Python developer skills upon
+Backup @ https://drive.google.com/drive/folders/1rdlefvtAF1f3ZvfD_BypaUZpIgltKw9b
 
-###Your task is to implement a command line application that will process and store malicious [IOCs] from all specified data sources on the Internet into a database.
-• Technical requirements (bold text) and recommendations:
+### Your task is to implement a command line application that will process and store malicious [IOCs] from all specified data sources on the Internet into a database.
+
+• Technical requirements and recommendations:
+
 – Programming language: Python 3 (ideally in Python 3.6 or higher).
 – Database: any relational database (ideally PostgreSQL).
 – Some unit and integration tests are nice to have, but not required.
